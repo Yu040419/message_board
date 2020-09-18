@@ -111,6 +111,7 @@ function getNewData(name, data) {
 }
 
 $(document).ready(() => {
+
   $('.wrap').click((e) => {
     const target = $(e.target);
 
@@ -128,6 +129,49 @@ $(document).ready(() => {
     showUpdateForm('nickname');
     showUpdateForm('username');
     showUpdateForm('password');
+
+    // 登入或註冊
+    function member(action) {
+      const username = target.parent().find('input[name="username"]').val();
+      const password = target.parent().find('input[name="password"]').val();
+
+      let nickname = null;
+      if (action === 'register') {
+        nickname = target.parent().find('input[name="nickname"]').val();
+        if (nickname === '') {
+          $(`.${action}__err`).remove();
+        $(`<div class="${action}__err">請完整輸入欄位資訊</div>`).insertAfter(`.${action}__title`);
+        }
+      }
+
+      if (username === '' || password === '') {
+        $(`.${action}__err`).remove();
+        $(`<div class="${action}__err">請完整輸入欄位資訊</div>`).insertAfter(`.${action}__title`);
+      } else {
+        $.ajax({
+          method: 'POST',
+          url: `handle_${action}.php`,
+          data: {
+            nickname,
+            username,
+            password,
+          },
+        }).done((resp) => {
+          const msg = JSON.parse(resp);
+          if (msg.OK) {
+            $(`.${action}__err`).remove();
+            window.location.href = 'index.php';
+          } else {
+            $(`.${action}__err`).remove();
+            $(`<div class="${action}__err">${msg.message}</div>`).insertAfter(`.${action}__title`);
+          }
+        }).fail((resp) => {
+          const msg = JSON.parse(resp);
+          $(`.${action}__err`).remove();
+          $(`<div class="${action}__err">${msg.message}</div>`).insertAfter(`.${action}__title`);
+        });
+      }
+    }
 
     // 編輯留言介面
     if (target.hasClass('comment__edit')) {
@@ -275,6 +319,8 @@ $(document).ready(() => {
           alert('帳號編輯失敗，請稍後再試一次');
         });
       }
+
+      // 編輯密碼
     } else if (target.hasClass('password__btn')) {
       const currentPassword = target.parent().children().eq(0).val();
       const newPassword = target.parent().children().eq(1).val();
@@ -307,6 +353,14 @@ $(document).ready(() => {
           alert(msg.message);
         });
       }
+
+      // 登入
+    } else if (target.hasClass('login__btn')) {
+      member('login');
+
+      // 註冊
+    } else if (target.hasClass('register__btn')) {
+      member('register');
     }
   });
 });

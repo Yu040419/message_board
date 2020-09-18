@@ -23,20 +23,4 @@ function escape($str) {
   return htmlspecialchars($str, ENT_QUOTES);
 }
 
-// alert 訊息後轉址
-function alert($message, $redirect) {
-  $alert = sprintf(
-    'alert("%s");',
-    $message
-  );
-  $location = sprintf(
-    'window.location.href = "%s";',
-    $redirect
-  );
-  echo '<script>';
-  echo $alert;
-  echo $location;
-  echo '</script>';
-}
-
 ?>

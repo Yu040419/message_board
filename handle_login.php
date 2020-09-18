@@ -7,7 +7,10 @@
   $password = $_POST['password'];
 
   if (empty($username) || empty($password)) {
-    header('Location: login.php?errcode=1');
+    echo json_encode(array(
+      'OK' => false,
+      'message' => '請完整輸入帳號及密碼'
+    ));
     exit();
   }
 
@@ -16,21 +19,34 @@
   $stmt->bind_param('s', $username);
   $result = $stmt->execute();
 
-  if(!$result) {
-    die($conn->error);
+  if (!$result) {
+    echo json_encode(array(
+      'OK' => false,
+      'message' => '登入失敗，請稍後再試一次'
+    ));
+    exit();
   }
 
   $result = $stmt->get_result();
   if ($result->num_rows === 0) {
-    header('Location: login.php?errcode=2');
+    echo json_encode(array(
+      'OK' => false,
+      'message' => '帳號或密碼輸入錯誤'
+    ));
     exit();
   }
 
   $row = $result->fetch_assoc();
   if (password_verify($password, $row['password'])) {
     $_SESSION['username'] = $username;
-    header('Location: index.php');
+    echo json_encode(array(
+      'OK' => true,
+      'message' => '登入成功'
+    ));
   } else {
-    header('Location: login.php?errcode=2');
+    echo json_encode(array(
+      'OK' => false,
+      'message' => '帳號或密碼輸入錯誤'
+    ));
   }
 ?>
