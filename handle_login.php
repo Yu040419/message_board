@@ -1,7 +1,7 @@
 <?php
-  session_start();
   require_once('conn.php');
   include_once('utils.php');
+  session_start();
 
   $username = $_POST['username'];
   $password = $_POST['password'];
@@ -37,8 +37,22 @@
   }
 
   $row = $result->fetch_assoc();
-  if (password_verify($password, $row['password'])) {
+  $salted_password = $password . $row['salt'];
+
+  // 登入成功
+  if (password_verify($salted_password, $row['password'])) {
     $_SESSION['username'] = $username;
+    $maxlifetime = time() + 3600 * 24 * 7; // 一周
+    $secure = false; // gandi 提供的是 http
+    $httponly = true; // prevent JavaScript access to session cookie
+    $samesite = 'lax';
+
+    if (PHP_VERSION_ID < 70300) {
+      setcookie(session_name(), session_id(), $maxlifetime, '/; samesite='.$samesite, $_SERVER['HTTP_HOST'], $secure, $httponly);
+    } else {
+      setcookie(session_name(), session_id(), $maxlifetime, '/', $_SERVER['HTTP_HOST'], $secure, $httponly, $samesite);
+    }
+    
     echo json_encode(array(
       'OK' => true,
       'message' => '登入成功'

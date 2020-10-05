@@ -1,5 +1,4 @@
 let edit = true;
-
 // escapeHtml from: https://stackoverflow.com/questions/24816/escaping-html-strings-with-jquery
 
 function escapeHtml(str) {
@@ -18,47 +17,76 @@ function escapeHtml(str) {
 }
 
 // 主留言
-function getComment(nickname, username, id, time, text) {
+function getComment(username, id, time, text) {
   const comment = `
-    <div class='comment__block'>
-      <div class='comment__block--info'>
-        <div class='comment__info--name'>${escapeHtml(nickname)}
-          <span class='comment__username' data-name=${escapeHtml(username)}> (@${escapeHtml(username)} )</span>
-          <img src='./img/edit.png' title='編輯廢文' class='img comment__edit' />
-          <img src='./img/delete.png' title='刪除廢文' class='img comment__delete' data-id='${escape(id)}'/>
+    <div class='col-md-9'>
+      <div class='comment__block card mb-4'>
+        <div class='card-body'>
+          <div class='comment__block--info mb-1 d-flex justify-content-between align-items-center'>
+            <div class='d-flex align-items-center'>
+              <span class='mb-0 card-title h5 comment__username'>${escapeHtml(username)}</span>
+            </div>
+            <div class='dropdown dropleft'>
+              <button class='btn btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>
+              <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+                <div class='comment__edit dropdown-item'>編輯</div>
+                <div class='comment__delete dropdown-item' data-id='${escapeHtml(id)}' data-type='comment'>刪除</div>
+              </div>
+            </div>
+          </div>
+          <div class='comment__info--time mb-2'>${escapeHtml(time)}</div>
+          <p class='comment__text card-text' data-id='${escapeHtml(id)}' parent-id='0'>${escapeHtml(text)}</p>
+          <div class='like__area mb-2'>
+            <svg width='1.3em' height='1.3em' viewBox='0 0 16 16' class='bi bi-heart like' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+              <path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/>
+            </svg>
+            <svg width='1.3em' height='1.3em' viewBox='0 0 16 16' class='bi bi-heart-fill liked hidden' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+              <path fill-rule='evenodd' class='liked__heart' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'/>
+            </svg>
+          </div>
+          <div class='subcomments'></div>
+          <form class='subcomment__form d-flex flex-column mt-2' action ='./handle_add_comment.php' method='POST' >
+            <textarea class='subcomment__input' name='text' placeholder='輸入回覆 . . .' required></textarea>
+            <input type='hidden' name='parent_id' value='${escapeHtml(id)}' />
+            <input type='button' class='btn add__comment' value='我要回覆' />
+          </form>
         </div>
-        <div class='comment__info--time'>${escapeHtml(time)}</div>
       </div>
-      <div class='comment__text' data-id='${escapeHtml(id)}'>${escapeHtml(text)}</div>
-      <div class='subcomments'></div>
-      <form class='subcomment__form' action ='./handle_add_comment.php' method='POST' >
-        <textarea class='subcomment__input' name='text' placeholder='輸入回覆 . . .' required></textarea>
-        <input type='hidden' name='parent_id' value='${escapeHtml(id)}' />
-        <input type='button' class='btn add__comment' value='我要回覆' />
-      </form>
     </div>
   `;
   return comment.replace(/\r\n|\n/g, '');
 }
 
 // 子留言
-function getSubComment(nickname, username, parentUsername, id, time, text) {
-  const author = (username === parentUsername) ? '<span class="origin" >樓主</span>' : '';
+function getSubComment(username, parentUsername, parentId, id, time, text) {
+  const author = (username === parentUsername) ? '<span class="origin">樓主</span>' : '';
 
   const subComment = `
     <div class='subcomment__block'>
-      <div class='subcomment__block--info'>
-        <div class='subcomment__info--name'>${escapeHtml(nickname)}
-          <span class='comment__username' data-name=${escapeHtml(username)}> (@${escapeHtml(username)} )</span>
-          <img src='./img/edit.png' title='編輯廢文' class='img comment__edit' />
-          <img src='./img/delete.png' title='刪除廢文' class='img comment__delete' data-id='${escapeHtml(id)}'/>
+      <div class='subcomment__block--info mb-1 d-flex justify-content-between align-items-center'>
+        <div class='d-flex align-items-center'>
+          <span class='mb-0 card-title h6'>${escapeHtml(username)}</span>
           ${author}
         </div>
-        <div class='subcomment__info--time'>${escapeHtml(time)}</div>
+        <div class='dropdown dropleft'>
+          <button class='btn btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>
+          <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
+            <div class='comment__edit dropdown-item'>編輯</div>
+            <div class='comment__delete dropdown-item' data-id='${escapeHtml(id)}' data-type='subcomment'>刪除</div>
+          </div>
+        </div>
       </div>
-      <div class='subcomment__text' data-id='${escapeHtml(id)}'>${escapeHtml(text)}</div>
+      <div class='subcomment__info--time mb-2'>${escapeHtml(time)}</div>
+      <p class='subcomment__text' data-id='${escapeHtml(id)}' parent-id='${escapeHtml(parentId)}'>${escapeHtml(text)}</p>
+      <div class='like__area'>
+        <svg width='1.3em' height='1.3em' viewBox='0 0 16 16' class='bi bi-heart like' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+          <path fill-rule='evenodd' d='M8 2.748l-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z'/>
+        </svg>
+        <svg width='1.3em' height='1.3em' viewBox='0 0 16 16' class='bi bi-heart-fill liked hidden' fill='currentColor' xmlns='http://www.w3.org/2000/svg'>
+          <path fill-rule='evenodd' class='liked__heart' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z'/>
+        </svg>
+      </div>
     </div>
-
   `;
   return subComment.replace(/\r\n|\n/g, '');
 }
@@ -69,22 +97,24 @@ function getCommentForm(id, text) {
     <form class='comment__update--form' action='./handle_update.php' method='POST'>
       <textarea class='comment__update--text' name='update__text'>${escapeHtml(text)}</textarea>
       <input type='hidden'name='id' value='${escapeHtml(id)}' />
-      <input type='button' class='btn comment__update--confirm' value='編輯留言' />
-      <span class='comment__update--cancel' >取消編輯</span>
+      <div class="mt-2">
+        <input type='button' class='button comment__update--confirm' value='編輯留言' />
+        <span class='comment__update--cancel' >取消編輯</span>
+      </div>
     </form>
   `;
   return comment.replace(/\r\n|\n/g, '');
 }
 
 // 編輯留言
-function getNewText(className, id, text) {
-  if (className === 'comment__block') {
+function getNewText(parentId, id, text) {
+  if (parentId === '0') {
     return `
-      <div class='comment__text' data-id='${escapeHtml(id)}'>${escapeHtml(text)}</div>
+      <p class='comment__text card-text' data-id='${escapeHtml(id)}'>${escapeHtml(text)}</p>
     `;
   }
   return `
-    <div class='subcomment__text' data-id='${escapeHtml(id)}'>${escapeHtml(text)}</div>
+    <p class='subcomment__text' data-id='${escapeHtml(id)}'>${escapeHtml(text)}</p>
   `;
 }
 
@@ -111,7 +141,6 @@ function getNewData(name, data) {
 }
 
 $(document).ready(() => {
-
   $('.wrap').click((e) => {
     const target = $(e.target);
 
@@ -140,7 +169,7 @@ $(document).ready(() => {
         nickname = target.parent().find('input[name="nickname"]').val();
         if (nickname === '') {
           $(`.${action}__err`).remove();
-        $(`<div class="${action}__err">請完整輸入欄位資訊</div>`).insertAfter(`.${action}__title`);
+          $(`<div class="${action}__err">請完整輸入欄位資訊</div>`).insertAfter(`.${action}__title`);
         }
       }
 
@@ -173,30 +202,32 @@ $(document).ready(() => {
       }
     }
 
-    // 編輯留言介面
+    // 出現編輯留言介面
     if (target.hasClass('comment__edit')) {
-      const commentBlock = target.parent().parent().parent();
-      const commentText = commentBlock.children().eq(1);
+      const cardBody = target.parent().parent().parent().parent();
+      const commentText = cardBody.children().eq(2);
       const text = commentText.text();
       const commentId = commentText.data('id');
 
       if (edit) {
+        // 留言隱藏並出現編輯表單
         commentText.toggleClass('hidden');
         const updateForm = getCommentForm(commentId, text);
-        // 將 form 插入 commentText 之後的節點
+        // 將編輯留言的表單插入 commentText 之後的節點
         $(updateForm).insertAfter(commentText);
         edit = false;
       } else {
-        commentBlock.children().eq(2).remove();
+        // 將編輯留言的表單拿掉並呈現留言
+        cardBody.children().eq(3).remove();
         commentText.toggleClass('hidden');
         edit = true;
       }
 
       // 編輯留言
     } else if (target.hasClass('comment__update--confirm')) {
-      const id = target.prev().val();
-      const newText = target.prev().prev().val();
-      const className = target.parent().parent().attr('class');
+      const id = target.parent().prev().val();
+      const newText = target.parent().prev().prev().val();
+      const parentId = target.parent().parent().prev().attr('parent-id');
 
       if (newText === '') {
         alert('請輸入廢文！');
@@ -210,12 +241,14 @@ $(document).ready(() => {
           },
         }).done((resp) => {
           const msg = JSON.parse(resp);
-          // 移除編輯前文字
-          target.parent().prev().remove();
-          const updateText = getNewText(className, id, newText);
-          $(updateText).insertAfter(target.parent().parent().children().eq(0));
+          // 移除編輯前留言
+          target.parent().parent().prev().remove();
+          // 插入新留言
+          const updateText = getNewText(parentId, id, newText);
+          $(updateText).insertAfter(target.parent().parent().parent().children()
+            .eq(1));
           // 隱藏編輯表單
-          target.parent().toggleClass('hidden');
+          target.parent().parent().toggleClass('hidden');
           alert(msg.message);
           edit = true;
         }).fail(() => {
@@ -226,8 +259,8 @@ $(document).ready(() => {
 
       // 取消編輯留言介面
     } else if (target.hasClass('comment__update--cancel')) {
-      const commentForm = target.parent();
-      const commentText = target.parent().parent().children().eq(1);
+      const commentForm = target.parent().parent();
+      const commentText = commentForm.prev();
       commentForm.toggleClass('hidden');
       commentText.toggleClass('hidden');
       edit = true;
@@ -236,6 +269,7 @@ $(document).ready(() => {
     } else if (target.hasClass('comment__delete')) {
       if (!window.confirm('確定要刪除嗎？')) return;
       const id = target.data('id');
+      const type = target.data('type');
 
       $.ajax({
         method: 'POST',
@@ -245,7 +279,15 @@ $(document).ready(() => {
         },
       }).done((resp) => {
         const msg = JSON.parse(resp);
-        target.parent().parent().parent().hide();
+        if (type === 'subcomment') {
+          target.parent().parent().parent().parent()
+            .hide();
+        } else {
+          target.parent().parent().parent().parent()
+            .parent()
+            .parent()
+            .hide();
+        }
         alert(msg.message);
       }).fail(() => {
         alert('刪除失敗，請稍後再試一次');
@@ -256,7 +298,7 @@ $(document).ready(() => {
       const parentID = target.prev().val();
       const parentUsername = target.parent().parent().children().eq(0)
         .find('.comment__username')
-        .data('name');
+        .text();
       const text = target.parent().children().eq(0).val();
 
       if (text === '') {
@@ -274,14 +316,14 @@ $(document).ready(() => {
           alert(msg.message);
           let newComment;
           let newSubComment;
-          const [nickname, username, id, time] = [msg.nickname, msg.username, msg.id, msg.time];
+          const [username, id, time] = [msg.username, msg.id, msg.time];
 
           if (parentID === '0') {
-            newComment = getComment(nickname, username, id, time, text);
+            newComment = getComment(username, id, time, text);
             $('.new__comment--text').val('');
             $('.comment').prepend(newComment);
           } else {
-            newSubComment = getSubComment(nickname, username, parentUsername, id, time, text);
+            newSubComment = getSubComment(username, parentUsername, parentID, id, time, text);
             $('.subcomment__input').val('');
             target.parent().prev().append(newSubComment);
           }
@@ -361,6 +403,55 @@ $(document).ready(() => {
       // 註冊
     } else if (target.hasClass('register__btn')) {
       member('register');
+
+      // 已登入並按讚
+    } else if (target.hasClass('like')) {
+      target.toggleClass('hidden');
+      target.next().toggleClass('hidden');
+      const commentId = target.parent().prev().attr('data-id');
+
+      $.ajax({
+        method: 'POST',
+        url: 'handle_like_comment.php',
+        data: {
+          commentId,
+        },
+      }).done((resp) => {
+        const msg = JSON.parse(resp);
+        if (msg.OK) {
+          const likedNumber = msg.likes;
+          target.parent().children().eq(2).remove();
+          target.parent().append(`<span class="liked__text" data="${likedNumber}">${likedNumber} 人已按讚</span>`);
+        }
+      }).fail(() => {
+        alert('按讚失敗，請稍後再試一次');
+      });
+
+      // 退讚
+    } else if (target.hasClass('liked__heart')) {
+      target.parent().toggleClass('hidden');
+      target.parent().prev().toggleClass('hidden');
+      const commentId = target.parent().parent().prev().attr('data-id');
+
+      $.ajax({
+        method: 'POST',
+        url: 'handle_delete_like_comment.php',
+        data: {
+          commentId,
+        },
+      }).done((resp) => {
+        const msg = JSON.parse(resp);
+        if (msg.OK) {
+          let likedNumber = target.parent().next().attr('data');
+          likedNumber -= 1;
+          target.parent().next().remove();
+          if (likedNumber >= 1) {
+            target.parent().parent().append(`<span class="liked__text" data="${likedNumber}">${likedNumber} 人已按讚</span>`);
+          }
+        }
+      }).fail(() => {
+        alert('退讚失敗，請稍後再試一次');
+      });
     }
   });
 });

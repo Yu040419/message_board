@@ -3,6 +3,15 @@
   require_once('conn.php');
   include_once('utils.php');
 
+  // 如果沒有登入
+  if (empty($_SESSION['username'])) {
+    echo json_encode(array(
+      'OK' => false,
+      'message' => '請登入',
+    ));
+    exit();
+  }
+
   // get user id & nickname
   $username = $_SESSION['username'];
   $user = getUserFromUsername($username);

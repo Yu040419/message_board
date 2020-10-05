@@ -4,7 +4,7 @@ html, body {
 }
 * {
     box-sizing: border-box;
-    font-family: 微軟正黑體, monospace;
+    font-family: Microsoft JhengHei, monospace;
 }
 .wrap {
     height: 100%;
@@ -27,25 +27,17 @@ html, body {
     top: 0px;
     z-index: 1;
 }
-.remind__text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1.5px solid steelblue;
-    width: 100%;
-    min-width: 300px;
-    max-width: 700px;
-    padding-bottom: 40px;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
+.navbar__title {
+    font-size: 1.5rem;
 }
-.remind {
-    color: steelblue;
-    font-size: 25px;
-    margin-bottom: 50px;
-    position: relative;
-    padding: 50px;
+.navbar__list {
+    color: #ffffffde;
+    padding: 0.4rem;
+    font-weight: bold;
+}
+.navbar__list:hover {
+    color: white;
+    text-decoration: none;
 }
 .register__title,
 .login__title,
@@ -59,9 +51,11 @@ html, body {
 }
 .latest {
     color: steelblue;
-    font-size: 25px;
+    font-size: 1.3rem;
     display: flex;
     justify-content: center;
+    margin: 1.5rem;
+    font-weight: bold;
 }
 .comment {
     display: flex;
@@ -72,62 +66,35 @@ html, body {
 .new__comment--text {
     border: steelblue 1.5px solid;
     border-radius: 10px;
-    padding: 15px;
-    width: 100%;
-    min-width: 280px;
-    max-width: 700px;
-    height: 100%;
-    min-height: 120px;
     font-size: 18px;
-    color: gray;
-    word-break: break-word;
-    white-space: pre-line;
     box-shadow: 3px 3px 5px lightgray;
+    word-break: break-word;
 }
 .comment__block {
-    margin: 20px;
+    color: rgb(90, 130, 163);
+}
+.new__comment--text {
+    color: grey;
+    white-space: pre-line;
 }
 .comment__block--info,
 .subcomment__block--info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     color: steelblue;
-    margin-bottom: 10px;
-}
-.comment__info--name,
-.subcomment__info--name {
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 22px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 100%;
-    max-width: 500px;
-    min-width: 100px;
-}
-.img {
-    height: 20px;
-    width: 20px;
-    padding: 0px;
-    margin-left: 5px;
-}
-.img:hover {
-    cursor: pointer;
 }
 .origin {
-    font-size: 14px;
+    font-size: 0.5rem;
     margin: 5px;
-    padding: 3px;
+    padding: 5px;
     border-radius: 5px;
     background-color: steelblue;
     color: white;
+    text-align: center;
 }
-.comment__info--time,
+.comment__info--time {
+    font-size: 0.8rem;
+}
 .subcomment__info--time {
-    font-size: 12px;
+    font-size: 0.7rem;
 }
 .comment__text,
 .comment__update--text,
@@ -136,18 +103,13 @@ html, body {
     font-weight: initial;
     word-break: break-word;
     white-space: pre-line;
-    height: 100%;
-    width: 100%;
-    min-width: 200px;
-    max-width: 670px;
     color: grey;
     outline: none;
 }
 .comment__text,
 .subcomment__text {
     border: hidden;
-    font-size: 18px;
-    min-height: 50px;
+    font-size: 1rem;
 }
 .comment__update--text {
     border: solid 1px lightgray;
@@ -155,18 +117,20 @@ html, body {
     font-size: 18px;
     min-height: 70px;
 }
+.comment__update--form {
+    display: flex;
+    flex-direction: column;
+}
 .comment__update--cancel {
     border: 1px solid rgb(169, 196, 218);
     border-radius: 5px;
-    width: 100%;
-    max-width: 100px;
-    height: 100%;
-    padding: 9px;
+    padding: 0.4rem;
     margin: 10px 0px 10px 10px;
     outline: none;
-    font-size: 16px;
+    font-size: 0.7rem;
     background-color: whitesmoke;
     color: steelblue;
+    text-align: center;
 }
 .comment__update--cancel:hover {
     cursor: pointer;
@@ -176,6 +140,10 @@ html, body {
 }
 .comment__update--confirm {
     margin-bottom: 10px;
+}
+.comment__edit:hover,
+.comment__delete:hover {
+    cursor: pointer;
 }
 .page {
     display: flex;
@@ -196,6 +164,7 @@ html, body {
     cursor: pointer;
     color: steelblue;
     border-bottom: solid 1px steelblue;
+    text-decoration: none;
 }
 .on {
     padding: 5px;
@@ -247,23 +216,33 @@ html, body {
 }
 .btn {
     background: steelblue;
-    font-size: 16px;
     color: whitesmoke;
     opacity: 0.7;
     border: none;
     border-radius: 5px;
-    width: 100%;
-    max-width: 90px;
-    padding: 10px;
-    margin-top: 10px;
     outline: none;
 }
+.button {
+    background: steelblue;
+    font-size: 0.7rem;
+    color: whitesmoke;
+    opacity: 0.7;
+    border: none;
+    border-radius: 5px;
+    max-width: 4.5rem;
+    padding: 0.4rem;
+    outline: none;
+    text-decoration: none;
+    text-align: center;
+}
 .btn:hover,
+.button:hover,
 .submit:hover {
     cursor: pointer;
     opacity: 1;
     outline: none;
     color: whitesmoke;
+    text-decoration: none;
 }
 .navbar__member {
     display: flex;
@@ -278,34 +257,25 @@ html, body {
     padding: 20px;
     color: steelblue;
     font-size: 20px;
-    font-weight: bold;
 }
 .new__comment--name {
-    width: 100%;
-    min-width: 300px;
-    max-width: 700px;
-    font-size: 22px;
-    padding-left: 10px;
-    text-align: left;
+    font-size: 1.2rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    margin: 0 auto;
+    font-weight: bold;
 }
 .new__comment--block {
     width: 100%;
-    min-width: 300px;
-    max-width: 700px;
     display: flex;
     flex-direction: column;
-    margin: 0 auto;
 }
 .new__comment--text {
     outline: none;
-    font-size: 18px;
-    justify-content: center;
-    align-items: center;
+    font-size: 0.9rem;
+    min-height: 6rem;
     margin: 10px 0px;
+    padding: 0.7rem;
 }
 .register__err,
 .login__err {
@@ -316,9 +286,6 @@ html, body {
 }
 
 /* profile.php*/
-.my__profile--title {
-    margin-bottom: 20px;
-}
 .profile__err,
 .profile__remind,
 .comment__update--err {
@@ -332,12 +299,8 @@ html, body {
     border: steelblue 1.5px solid;
     border-radius: 10px;
     padding: 20px;
-    width: 100px;
-    min-width: 300px;
-    height: 100%;
-    min-height: 180px;
+    margin: 1.4rem;
     color: steelblue;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -359,11 +322,13 @@ html, body {
     border-right: none;
     outline: none;
 }
-
 .my__profile--nickname + .my__nickname--update,
 .my__profile--username + .my__username--update,
 .my__profile--password + .my__password--update {
     margin-top: 10px;
+}
+.edit__img:hover {
+    cursor: pointer;
 }
 .submit {
     padding: 8px;
@@ -387,28 +352,17 @@ html, body {
 .subcomment__block {
     background-color: #4682b412;
     border-radius: 10px;
-    padding: 10px;
+    padding: 1rem;
     width: 100%;
     height: 100%;
-    min-height: 100px;
     font-size: 18px;
-    color: gray;
+    color: steelblue;
     word-break: break-word;
-    white-space: pre-line;
-}
-.subcomment__form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
 }
 .subcomment__input {
     border: solid 1px lightgray;
     padding: 10px;
-    margin: 10px 10px;
-    font-size: 16px;
+    font-size: 0.8rem;
     min-height: 70px;
 }
 .subcomment__input ~ .btn {
@@ -416,28 +370,22 @@ html, body {
     margin: 0px;
 }
 .subcomment__block ~ .subcomment__block {
-    margin-top: 10px;
+    margin-top: 0.7rem;
 }
 
-/* RWD */
-
-@media screen and (max-width:480px) {
-    .navbar {
-        font-size: 18px;
-    }
-    .navbar__title {
-        font-size: 25px;
-        margin-left: 20px;
-    }
-    .navbar__member--name,
-    .navbar__member--logout {
-        margin-right: 10px;
-    }
-    .remind__text,
-    .latest {
-        font-size: 22px;
-    }
-    .register {
-        min-width: 250px;
-    }
+/* like */
+.like__area {
+    display: flex;
+    align-items: center;
+}
+.like, .liked {
+    margin: 10px 0px 5px 0px;
+}
+.like:hover,
+.liked:hover {
+    cursor: pointer;
+}
+.liked__text {
+    margin: 10px 0px 5px 10px;
+    font-size: 16px;
 }
