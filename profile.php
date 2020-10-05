@@ -117,7 +117,6 @@ include_once('utils.php');
       ?>
     </div>
   </div>
-  <script>let isLogin = <?php echo empty($_SESSION['username']) ? 'false' : 'true' ?></script>
   <script src="JS/all.js"></script>
 </body>
 </html>
