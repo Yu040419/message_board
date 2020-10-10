@@ -1,0 +1,106 @@
+@function font-size($size) {
+  @return $base-font-size * $size;
+}
+
+@mixin display-flex(
+  $flex: flex,
+  $flex-direction: row,
+  $align-items: center,
+  $justify-content: center
+) {
+  display: $flex;
+  flex-direction: $flex-direction;
+  align-items: $align-items;
+  justify-content: $justify-content;
+}
+
+// extend
+%block {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+%border {
+  border: $main-color 1.5px solid;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 15px;
+  color: $main-color;
+  @include display-flex(flex, column);
+  box-shadow: 3px 3px 5px $commt-border-color;
+}
+
+%block-title {
+  color: $main-color;
+  font-size: font-size(1.4);
+  margin-top: 30px;
+  @include display-flex();
+}
+
+%block-item {
+  width: 100%;
+  min-width: 200px;
+  height: 45px;
+  margin-bottom: 15px;
+  border-bottom: 1.5px solid $main-color;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-size: font-size(1);
+  outline: none;
+}
+
+%err {
+  @include display-flex();
+  color: $warn-text-color;
+  margin: 10px;
+}
+
+%profile-update-form {
+  @include display-flex(flex, column, inherit, center);
+  margin-top: 10px;
+}
+
+%comment-block {
+  border: $main-color 1.5px solid;
+  border-radius: 10px;
+  font-size: font-size(1.1);
+  box-shadow: 3px 3px 5px $commt-border-color;
+  word-break: break-word;
+}
+
+%comment-text {
+  word-break: break-word;
+  white-space: pre-line;
+  color: $commt-color;
+  outline: none;
+}
+
+%comment-border {
+  border: hidden;
+  font-size: font-size(1.1);
+}
+
+%hover {
+  cursor: pointer;
+}
+
+%page-btn {
+  padding: 5px;
+  margin: 5px;
+  font-size: font-size(0.9);
+}
+
+%btn {
+  background: $main-color;
+  color: $text-color;
+  opacity: 0.7;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+%btn-hover {
+  opacity: 1;
+  color: whitesmoke;
+}

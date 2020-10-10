@@ -1,0 +1,57 @@
+.my {
+  &__comment {
+    @extend %block-title;
+  }
+
+  &__nickname--update {
+    @extend %profile-update-form;
+  }
+
+  &__username--update {
+    @extend %profile-update-form;
+  }
+
+  &__password--update {
+    @extend %profile-update-form;
+  }
+
+  &__profile {
+    &--title {
+      @extend %block-title;
+    }
+
+    &--border {
+      border: $main-color 1.5px solid;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 1.4rem;
+      color: $main-color;
+      @include display-flex(flex, column, flex-start, center);
+      box-shadow: 3px 3px 5px $commt-border-color;
+    }
+
+    &--block ~ &--block {
+      margin-top: 20px;
+    }
+
+    &--input {
+      padding: 10px 0px;
+      margin-bottom: 5px;
+      font-size: font-size(0.9);
+      border-bottom: 1.5px solid $main-color;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      outline: none;
+    }
+  }
+}
+
+.edit__img:hover {
+  @extend %hover;
+}
+
+.nocomment {
+  color: $commt-color;
+  margin: 20px 0px 20px 0px;
+}

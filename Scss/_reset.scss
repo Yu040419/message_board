@@ -1,0 +1,18 @@
+html, body {
+  margin: 0px;
+  padding: 0px;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Microsoft JhengHei, monospace;
+}
+
+a, button {
+  text-decoration: none;
+  outline: none;
+  &:hover {
+    text-decoration: none;
+    outline: none;
+  }
+}

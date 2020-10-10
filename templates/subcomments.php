@@ -28,7 +28,7 @@
       // 如果是使用者的留言，有編輯及刪除選單
       if ($row_sub['username'] === $username) {?>
         <div class='d-flex align-items-center'>
-          <span class='mb-0 card-title h6'><?php echo escape($row_sub['username'])?></span>
+          <span class='mb-0 card-title subcomment__username'><?php echo escape($row_sub['username'])?></span>
         
         <?php
         // 如果子留言跟父留言為同個使用者
@@ -49,7 +49,7 @@
 
       } else {?>
         <div class='d-flex align-items-center'>
-          <span class='mb-0 card-title h6'><?php echo escape($row_sub['username'])?></span>
+          <span class='mb-0 card-title subcomment__username'><?php echo escape($row_sub['username'])?></span>
 
           <?php
           // 如果子留言跟父留言為同個使用者
@@ -63,7 +63,7 @@
 
       </div>
       <div class='subcomment__info--time mb-2'><?php echo escape($row_sub['time'])?></div>
-      <p class='subcomment__text' data-id='<?php echo escape($row_sub["comm_id"])?>' parent-id='<?php echo escape($row["comm_id"])?>'><?php echo escape($row_sub["comm_id"])?></p>
+      <p class='subcomment__text' data-id='<?php echo escape($row_sub["comm_id"])?>' parent-id='<?php echo escape($row["comm_id"])?>'><?php echo escape($row_sub["text"])?></p>
       <div class='like__area'>
 
       <?php

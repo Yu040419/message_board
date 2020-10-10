@@ -1,0 +1,27 @@
+.register {
+  @extend %block;
+
+  &__block {
+    @extend %border;
+  }
+
+  &__title {
+    @extend %block-title;
+  }
+
+  &__nickname {
+    @extend %block-item;
+  }
+
+  &__username {
+    @extend %block-item;
+  }
+
+  &__password {
+    @extend %block-item;
+  }
+
+  &__err {
+    @extend %err;
+  }
+}

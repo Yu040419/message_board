@@ -11,19 +11,19 @@
         // 如果是使用者的留言，有編輯及刪除選單
         if ($row['username'] === $username) { ?>
           <div class='d-flex align-items-center'>
-            <span class='mb-0 card-title h5 comment__username'><?php echo escape($row['username'])?></span>
+            <span class='mb-0 card-title comment__username'><?php echo escape($row['username'])?></span>
           </div>
           <div class='dropdown dropleft'>
             <button class='btn btn-sm dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'></button>
             <div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>
-              <div class='comment__edit， dropdown-item'>編輯</div>
+              <div class='comment__edit dropdown-item'>編輯</div>
               <div class='comment__delete dropdown-item' data-id='<?php echo escape($row['comm_id'])?>' data-type='comment'>刪除</div>
             </div>
           </div>
           <?php
         } else { ?>
           <div class='d-flex align-items-center'>
-            <span class='mb-0 card-title h5'><?php echo escape($row['username'])?></span>
+            <span class='mb-0 card-title comment__username'><?php echo escape($row['username'])?></span>
           </div>
           <?php
         } ?>
