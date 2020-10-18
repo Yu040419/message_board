@@ -1,0 +1,47 @@
+#warning {
+  background: lightpink;
+  color: $warn-text-color;
+  font-size: font-size(0.9);
+  width: 100%;
+  @include display-flex();
+  padding: 5px;
+}
+
+.new__comment {
+  @include display-flex(flex, column, inherit, center);
+  padding: 20px;
+  color: $main-color;
+
+  &--name {
+    font-size: font-size(1.3);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-weight: bold;
+  }
+
+  &--block {
+    @include display-flex(flex, column, inherit, center);
+  }
+
+  &--text {
+    outline: none;
+    font-size: font-size(0.9);
+    min-height: 6rem;
+    margin: 10px 0px;
+    padding: 0.7rem;
+    color: $commt-color;
+    white-space: pre-line;
+    @extend %comment-block;
+  }
+}
+
+.latest {
+  color: $main-color;
+  font-size: font-size(1.5);
+  @include display-flex();
+  margin: 1.5rem;
+  font-weight: bold;
+}
+
+

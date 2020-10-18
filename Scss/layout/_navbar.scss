@@ -1,0 +1,21 @@
+.navbar {
+  background: $main-color;
+  color: $text-color;
+  position: sticky;
+  top: 0px;
+  z-index: 1;
+
+  &__title {
+    font-size: font-size(1.5);
+  }
+  
+  &__list {
+    color: #ffffffde;
+    padding: 0.4rem;
+    font-weight: bold;
+    &:hover {
+      color: $text-color;
+      text-decoration: none;
+    }
+  } 
+}

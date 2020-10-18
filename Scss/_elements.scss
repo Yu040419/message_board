@@ -1,0 +1,96 @@
+// page
+.page {
+  @include display-flex();
+  margin: 10px;
+
+  &__btn {
+    color: $commt-color;
+    @extend %page-btn;
+
+    &:hover {
+      @extend %hover;
+      color: $main-color;
+      border-bottom: solid 1px $main-color;
+    }
+  }
+}
+
+.on {
+  @extend %page-btn;
+  border-bottom: solid 1px steelblue;
+  color: steelblue;
+}
+
+// btn for toggling list of update and delete 
+.btn {
+  @extend %btn;
+
+  &:hover {
+    @extend %hover;
+    @extend %btn-hover;
+  }
+}
+
+// button
+.button {
+  @extend %btn;
+  font-size: 0.7rem;
+  max-width: 4.5rem;
+  padding: 0.4rem;
+  text-align: center;
+
+  &:hover {
+    @extend %hover;
+    @extend %btn-hover;
+  }
+}
+
+// btn for updating user info
+.submit {
+  @extend %btn;
+  padding: 0.4rem;
+  max-width: 3.5rem;
+  font-size: 13px;
+  margin-top: 10px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+// 樓主
+.origin {
+  font-size: font-size(0.5);
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: $main-color;
+  color: $text-color;
+  text-align: center;
+}
+
+// 按讚
+.like {
+  margin: 10px 0px 5px 0px;
+
+  &:hover {
+    @extend %hover;
+  }
+
+  &d {
+    margin: 10px 0px 5px 0px;
+
+    &:hover {
+      @extend %hover;
+    }
+
+    &__text {
+      margin: 10px 0px 5px 10px;
+      font-size: $base-font-size;
+    }
+  }
+
+  &__area {
+    @include display-flex(flex, row, center, flex-start);
+  }
+}
