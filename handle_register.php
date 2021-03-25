@@ -5,9 +5,7 @@
 
   $nickname = $_POST["nickname"];
   $username = $_POST["username"];
-  $salt = getSalt();
-  $password = $_POST["password"] . $salt;
-  $password = password_hash($password, PASSWORD_DEFAULT);
+  $password = $_POST["password"];
 
   if (empty($nickname) || empty($username) || empty($password)) {
     echo json_encode(array(
@@ -16,6 +14,10 @@
     ));
     exit();
   }
+
+  $salt = getSalt();
+  $password .= $salt;
+  $password = password_hash($password, PASSWORD_DEFAULT);
 
   $sql = "INSERT INTO yu_users(nickname, username, password, salt) VALUES (?, ?, ?, ?)";
   $stmt = $conn->prepare($sql);
